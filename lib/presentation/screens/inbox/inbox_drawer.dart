@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../domain/entities/email.dart';
 import 'drawer_item.dart';
@@ -92,6 +93,19 @@ class InboxDrawer extends StatelessWidget {
                     onTap: () => onFolderSelected(EmailFolder.trash),
                   ),
                   const Divider(),
+                  ListTile(
+                    leading: const Icon(Icons.settings_outlined,
+                        color: Color(0xFF5F6368)),
+                    title: const Text('Settings',
+                        style: TextStyle(color: Color(0xFF5F6368))),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      context.push('/settings');
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   ListTile(
                     leading:
                         const Icon(Icons.logout, color: Color(0xFF5F6368)),
