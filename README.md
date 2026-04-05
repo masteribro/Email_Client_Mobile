@@ -1,95 +1,36 @@
 # MailBox – Flutter Email Client
 
-A sample email client mobile app built with Flutter, demonstrating clean architecture, state management with Riverpod, and navigation with go_router.
+A mobile email client built as part of a Flutter developer assessment. It uses mock data to simulate a real email experience — inbox, compose, email detail, and folder navigation.
 
----
+## How to Run
 
-## Features
-
-- **Authentication** – Simulated login with demo credentials and loading/error states
-- **Inbox Screen** – Scrollable email list with sender avatar, subject, preview, timestamp, and unread indicators
-- **Folder Navigation** – Drawer with Inbox, Starred, Sent, Drafts, and Trash
-- **Email Detail** – Full email content with mark as read/unread, star, delete, reply, and forward
-- **Compose Email** – New message form with To, Subject, and Body fields; discard confirmation
-- **Smooth Transitions** – Slide and fade transitions between screens
-
----
-
-## Tech Stack
-
-| Concern | Package |
-|---|---|
-| State management | `flutter_riverpod ^2.5.1` |
-| Navigation | `go_router ^14.0.0` |
-| Date formatting | `intl ^0.19.0` |
-| ID generation | `uuid ^4.4.0` |
-
----
-
-## Architecture
-
-```
-lib/
-├── app/                    # App shell, router configuration
-├── core/                   # Theme, utilities
-├── data/                   # Repository implementations, mock data source
-├── domain/                 # Entities, abstract repository interfaces
-└── presentation/           # Providers (Riverpod), screens, widgets
-```
-
-Clean architecture layers:
-- **Domain** – `Email`, `User` entities + abstract `AuthRepository` / `EmailRepository`
-- **Data** – `MockEmailDatasource` (realistic in-memory data) + concrete repository implementations
-- **Presentation** – `AuthNotifier` (ChangeNotifier), `EmailNotifier` (StateNotifier), four screens, reusable widgets
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Flutter SDK >= 3.0.0 (latest stable recommended)
-- Dart SDK >= 3.0.0
-
-### Run
+Make sure you have Flutter installed (latest stable), then:
 
 ```bash
 flutter pub get
 flutter run
 ```
 
-### Demo credentials
+That's it. No environment variables or API keys needed since everything runs on mock data.
 
-| Field | Value |
-|---|---|
-| Email | `demo@mailbox.com` |
-| Password | `demo` |
+To log in, use:
+- Email: `ibrahim@mailbox.com`
+- Password: `demo`
 
-Any email address with password `password123` also works.
+## What's Inside
 
----
+The app follows clean architecture — domain, data, and presentation layers are kept separate. State management is done with flutter_bloc (Cubits specifically). Navigation uses go_router.
 
-## Screens
+Screens:
+- Login with simulated auth and error handling
+- Inbox with folder switching (Starred, Sent, Drafts, Trash)
+- Email detail with mark as read/unread, star, delete
+- Compose with reply and forward support
 
-| Screen | Route |
-|---|---|
-| Login | `/login` |
-| Inbox | `/inbox` |
-| Email Detail | `/email/:id` |
-| Compose | `/compose` |
-
----
-
-## Design Decisions
-
-- **Riverpod over Provider/Bloc** – Riverpod's compile-safe providers and `StateNotifier` make it easy to test the state independently of the UI. `ChangeNotifierProvider` is used for `AuthNotifier` so it can serve as go_router's `refreshListenable` directly.
-- **go_router redirect** – Auth redirect logic lives entirely in the router, not in individual screens. When auth state changes, the `_AuthStateChangeNotifier` bridge fires, go_router re-evaluates `redirect`, and navigation happens automatically.
-- **In-memory mock data** – `MockEmailDatasource` generates 22 emails (15 inbox, 5 sent, 2 drafts) with realistic content and staggered timestamps. All mutations (mark read, star, delete, send) update the in-memory list.
-- **No code generation** – freezed/riverpod_generator are intentionally omitted to keep setup simple (no `build_runner` step required).
-
----
+Packages used: `flutter_bloc`, `go_router`, `intl`, `uuid`
 
 ## Challenges
 
-- **go_router + Riverpod auth redirect** – GoRouter's `refreshListenable` requires a `Listenable`. Since `StateNotifier` is not a Flutter `ChangeNotifier`, a thin `_AuthStateChangeNotifier` bridge listens to the Riverpod provider and calls `notifyListeners()`, triggering the router to re-evaluate `redirect`.
-- **Reactive state updates** – Marking an email as read in the detail screen must immediately reflect back in the inbox list. This is handled by storing all emails in a single flat `List<Email>` in `EmailNotifier` and replacing entries with `copyWith`, so both screens watching the same provider stay in sync.
+The trickiest part was keeping the email list in sync across screens. When you open an email and it gets marked as read, the inbox behind it needs to reflect that immediately when you go back. I solved this by keeping a single flat list of all emails in the cubit and using `copyWith` to replace entries — both screens read from the same state so they stay in sync automatically.
+
+The other thing that took some back and forth was the BLoC-to-GoRouter auth flow. GoRouter needs a `Listenable` to know when to re-evaluate routes, but the cubit just emits states. I ended up doing the navigation manually inside a `BlocListener` in the app shell instead of using `redirect`, which turned out to be simpler.
