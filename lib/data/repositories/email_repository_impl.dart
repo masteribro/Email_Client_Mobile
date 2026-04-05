@@ -9,6 +9,7 @@ class EmailRepositoryImpl implements EmailRepository {
   Future<List<Email>> getAllEmails() async {
     await Future.delayed(const Duration(milliseconds: 800));
     return List.unmodifiable(_emails);
+
   }
 
   @override

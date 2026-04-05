@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class CredentialRow extends StatelessWidget {
   final String label;
   final String value;

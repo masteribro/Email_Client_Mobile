@@ -8,6 +8,7 @@ class DateFormatter {
 
     if (emailDate == today) {
       return DateFormat.jm().format(dateTime);
+
     } else if (emailDate == today.subtract(const Duration(days: 1))) {
       return 'Yesterday';
     } else if (now.difference(dateTime).inDays < 7) {
@@ -22,6 +23,7 @@ class DateFormatter {
   static String formatDetailDate(DateTime dateTime) {
     final now = DateTime.now();
     if (dateTime.year == now.year) {
+
       return DateFormat('MMM d, h:mm a').format(dateTime);
     }
     return DateFormat('MMM d, yyyy, h:mm a').format(dateTime);

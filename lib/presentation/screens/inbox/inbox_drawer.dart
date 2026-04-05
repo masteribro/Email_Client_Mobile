@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
+import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../domain/entities/email.dart';
 import 'drawer_item.dart';
 
@@ -33,7 +33,7 @@ class InboxDrawer extends StatelessWidget {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1A73E8),
+                      color: AppColors.primary,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(Icons.mail_rounded,
@@ -41,11 +41,11 @@ class InboxDrawer extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   const Text(
-                    'MailBox',
+                    AppStrings.appName,
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF202124),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                 ],
@@ -59,7 +59,7 @@ class InboxDrawer extends StatelessWidget {
                   DrawerItem(
                     icon: Icons.inbox_outlined,
                     selectedIcon: Icons.inbox,
-                    label: 'Inbox',
+                    label: AppStrings.inbox,
                     isSelected: currentFolder == EmailFolder.inbox,
                     badge: unreadCount,
                     onTap: () => onFolderSelected(EmailFolder.inbox),
@@ -67,50 +67,37 @@ class InboxDrawer extends StatelessWidget {
                   DrawerItem(
                     icon: Icons.star_border_outlined,
                     selectedIcon: Icons.star,
-                    label: 'Starred',
+                    label: AppStrings.starred,
                     isSelected: currentFolder == EmailFolder.starred,
                     onTap: () => onFolderSelected(EmailFolder.starred),
                   ),
                   DrawerItem(
                     icon: Icons.send_outlined,
                     selectedIcon: Icons.send,
-                    label: 'Sent',
+                    label: AppStrings.sent,
                     isSelected: currentFolder == EmailFolder.sent,
                     onTap: () => onFolderSelected(EmailFolder.sent),
                   ),
                   DrawerItem(
                     icon: Icons.drafts_outlined,
                     selectedIcon: Icons.drafts,
-                    label: 'Drafts',
+                    label: AppStrings.drafts,
                     isSelected: currentFolder == EmailFolder.drafts,
                     onTap: () => onFolderSelected(EmailFolder.drafts),
                   ),
                   DrawerItem(
                     icon: Icons.delete_outline,
                     selectedIcon: Icons.delete,
-                    label: 'Trash',
+                    label: AppStrings.trash,
                     isSelected: currentFolder == EmailFolder.trash,
                     onTap: () => onFolderSelected(EmailFolder.trash),
                   ),
                   const Divider(),
                   ListTile(
-                    leading: const Icon(Icons.settings_outlined,
-                        color: Color(0xFF5F6368)),
-                    title: const Text('Settings',
-                        style: TextStyle(color: Color(0xFF5F6368))),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      context.push('/settings');
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  ListTile(
-                    leading:
-                        const Icon(Icons.logout, color: Color(0xFF5F6368)),
-                    title: const Text('Sign out',
-                        style: TextStyle(color: Color(0xFF5F6368))),
+                    leading: const Icon(Icons.logout,
+                        color: AppColors.textSecondary),
+                    title: const Text(AppStrings.signOut,
+                        style: TextStyle(color: AppColors.textSecondary)),
                     onTap: onSignOut,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

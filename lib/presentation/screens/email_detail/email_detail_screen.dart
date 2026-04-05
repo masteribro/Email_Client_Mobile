@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/constants/app_strings.dart';
 import '../../blocs/email/email_cubit.dart';
 import '../../blocs/email/email_state.dart';
 import 'email_body.dart';
@@ -30,11 +31,10 @@ class _EmailDetailScreenState extends State<EmailDetailScreen> {
     return BlocBuilder<EmailCubit, EmailState>(
       builder: (context, state) {
         final email = state.emailById(widget.emailId);
-
         if (email == null) {
           return Scaffold(
             appBar: AppBar(),
-            body: const Center(child: Text('Email not found')),
+            body: const Center(child: Text(AppStrings.emailNotFound)),
           );
         }
 
@@ -50,7 +50,9 @@ class _EmailDetailScreenState extends State<EmailDetailScreen> {
                   email.isStarred ? Icons.star : Icons.star_border,
                   color: email.isStarred ? const Color(0xFFF4B400) : null,
                 ),
-                tooltip: email.isStarred ? 'Unstar' : 'Star',
+                tooltip: email.isStarred
+                    ? AppStrings.unstarTooltip
+                    : AppStrings.starTooltip,
                 onPressed: () =>
                     context.read<EmailCubit>().toggleStar(widget.emailId),
               ),
@@ -60,13 +62,15 @@ class _EmailDetailScreenState extends State<EmailDetailScreen> {
                       ? Icons.mark_email_unread_outlined
                       : Icons.mark_email_read_outlined,
                 ),
-                tooltip: email.isRead ? 'Mark as unread' : 'Mark as read',
+                tooltip: email.isRead
+                    ? AppStrings.markAsUnread
+                    : AppStrings.markAsRead,
                 onPressed: () =>
                     context.read<EmailCubit>().toggleRead(widget.emailId),
               ),
               IconButton(
                 icon: const Icon(Icons.delete_outline),
-                tooltip: 'Move to trash',
+                tooltip: AppStrings.moveToTrash,
                 onPressed: () {
                   context.read<EmailCubit>().moveToTrash(widget.emailId);
                   context.pop();

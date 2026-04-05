@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_strings.dart' show AppStrings;
 import '../../../domain/entities/email.dart';
 
 class ReplyBar extends StatelessWidget {
@@ -17,8 +19,8 @@ class ReplyBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: const BoxDecoration(
           color: Colors.white,
-          border:
-              Border(top: BorderSide(color: Color(0xFFE0E0E0), width: 0.5)),
+          border: Border(
+              top: BorderSide(color: AppColors.divider, width: 0.5)),
         ),
         child: Row(
           children: [
@@ -30,7 +32,7 @@ class ReplyBar extends StatelessWidget {
                   onPressed: () => context.push('/compose', extra: {
                     'replyToEmail': email.senderEmail,
                     'replyToName': email.senderName,
-                    'replySubject': 'Re: ${email.subject}',
+                    'replySubject': AppStrings.replySubject(email.subject),
                   }),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
@@ -43,7 +45,7 @@ class ReplyBar extends StatelessWidget {
                 icon: const Icon(Icons.forward, size: 18),
                 label: const Text('Forward'),
                 onPressed: () => context.push('/compose', extra: {
-                  'replySubject': 'Fwd: ${email.subject}',
+                  'replySubject': AppStrings.forwardSubject(email.subject),
                 }),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),

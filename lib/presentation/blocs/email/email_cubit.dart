@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../domain/entities/email.dart';
+
 import '../../../domain/repositories/email_repository.dart';
 import 'email_state.dart';
 

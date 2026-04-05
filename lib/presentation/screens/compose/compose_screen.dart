@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../blocs/auth/auth_cubit.dart';
 import '../../blocs/auth/auth_state.dart';
 import '../../blocs/email/email_cubit.dart';
@@ -51,8 +53,8 @@ class _ComposeScreenState extends State<ComposeScreen> {
     if (to.isEmpty || !to.contains('@')) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please enter a valid recipient email'),
-          backgroundColor: Color(0xFFEA4335),
+          content: Text(AppStrings.invalidRecipient),
+          backgroundColor: AppColors.error,
         ),
       );
       return;
@@ -88,20 +90,20 @@ class _ComposeScreenState extends State<ComposeScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Discard draft?'),
-        content: const Text('This message will not be saved.'),
+        title: const Text(AppStrings.discardDraft),
+        content: const Text(AppStrings.discardMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Cancel'),
+            child: const Text(AppStrings.cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(ctx).pop();
               context.pop();
             },
-            child: const Text('Discard',
-                style: TextStyle(color: Color(0xFFEA4335))),
+            child: const Text(AppStrings.discard,
+                style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -125,10 +127,10 @@ class _ComposeScreenState extends State<ComposeScreen> {
                 children: [
                   Icon(Icons.check_circle, color: Colors.white, size: 18),
                   SizedBox(width: 8),
-                  Text('Message sent'),
+                  Text(AppStrings.messageSent),
                 ],
               ),
-              backgroundColor: Color(0xFF34A853),
+              backgroundColor: AppColors.success,
             ),
           );
           context.pop();
@@ -137,8 +139,8 @@ class _ComposeScreenState extends State<ComposeScreen> {
             SnackBar(
               content: Text(state.message.isNotEmpty
                   ? state.message
-                  : 'Failed to send message. Please try again.'),
-              backgroundColor: const Color(0xFFEA4335),
+                  : AppStrings.sendFailed),
+              backgroundColor: AppColors.error,
             ),
           );
         }
@@ -152,7 +154,7 @@ class _ComposeScreenState extends State<ComposeScreen> {
               icon: const Icon(Icons.close),
               onPressed: isSending ? null : _showDiscardDialog,
             ),
-            title: const Text('New message'),
+            title: const Text(AppStrings.newMessage),
             actions: [
               if (isSending)
                 const Center(
@@ -168,7 +170,7 @@ class _ComposeScreenState extends State<ComposeScreen> {
               else
                 IconButton(
                   icon: const Icon(Icons.send),
-                  tooltip: 'Send',
+                  tooltip: AppStrings.send,
                   onPressed: _sendEmail,
                 ),
             ],
@@ -177,18 +179,18 @@ class _ComposeScreenState extends State<ComposeScreen> {
             children: [
               const Divider(height: 1),
               ComposeField(
-                prefix: 'From',
+                prefix: AppStrings.from,
                 child: Text(
                   fromEmail,
                   style: const TextStyle(
                     fontSize: 15,
-                    color: Color(0xFF5F6368),
+                    color: AppColors.textSecondary,
                   ),
                 ),
               ),
               const Divider(height: 1),
               ComposeField(
-                prefix: 'To',
+                prefix: AppStrings.to,
                 child: TextField(
                   controller: _toController,
                   keyboardType: TextInputType.emailAddress,
@@ -198,30 +200,29 @@ class _ComposeScreenState extends State<ComposeScreen> {
                     border: InputBorder.none,
                     isDense: true,
                     contentPadding: EdgeInsets.zero,
-                    hintText: 'Recipients',
-                    hintStyle: TextStyle(color: Color(0xFF9E9E9E)),
+                    hintText: AppStrings.recipients,
+                    hintStyle: TextStyle(color: AppColors.textHint),
                   ),
                 ),
               ),
               const Divider(height: 1),
+
               ComposeField(
-                prefix: 'Subject',
-                child: TextField(
-                  controller: _subjectController,
+                prefix: AppStrings.subject,
+                child: TextField(controller: _subjectController,
                   textInputAction: TextInputAction.next,
                   style: const TextStyle(fontSize: 15),
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                     isDense: true,
                     contentPadding: EdgeInsets.zero,
-                    hintStyle: TextStyle(color: Color(0xFF9E9E9E)),
+                    hintStyle: TextStyle(color: AppColors.textHint),
                   ),
                 ),
               ),
               const Divider(height: 1),
               Expanded(
-                child: Padding(
-                  padding:
+                child: Padding(padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: TextField(
                     controller: _bodyController,
@@ -231,8 +232,8 @@ class _ComposeScreenState extends State<ComposeScreen> {
                     style: const TextStyle(fontSize: 15, height: 1.5),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Compose email',
-                      hintStyle: TextStyle(color: Color(0xFF9E9E9E)),
+                      hintText: AppStrings.composeHint,
+                      hintStyle: TextStyle(color: AppColors.textHint),
                     ),
                   ),
                 ),
@@ -246,31 +247,31 @@ class _ComposeScreenState extends State<ComposeScreen> {
               decoration: const BoxDecoration(
                 color: Colors.white,
                 border: Border(
-                  top: BorderSide(color: Color(0xFFE0E0E0), width: 0.5),
+                  top: BorderSide(color: AppColors.divider, width: 0.5),
                 ),
               ),
               child: Row(
                 children: [
                   IconButton(
                     icon: const Icon(Icons.attach_file),
-                    tooltip: 'Attach file',
+                    tooltip: AppStrings.attachFile,
                     onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          content: Text('Attachments not supported in demo')),
+                          content: Text(AppStrings.attachmentsNotSupported)),
                     ),
                   ),
                   IconButton(
                     icon: const Icon(Icons.link),
-                    tooltip: 'Insert link',
+                    tooltip: AppStrings.insertLink,
                     onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          content: Text('Links not supported in demo')),
+                          content: Text(AppStrings.linksNotSupported)),
                     ),
                   ),
                   const Spacer(),
                   TextButton.icon(
                     icon: const Icon(Icons.send, size: 18),
-                    label: const Text('Send'),
+                    label: const Text(AppStrings.send),
                     onPressed: isSending ? null : _sendEmail,
                   ),
                 ],

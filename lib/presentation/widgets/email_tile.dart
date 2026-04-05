@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/constants/app_colors.dart';
 import '../../core/utils/date_formatter.dart';
 import '../../domain/entities/email.dart';
 import 'sender_avatar.dart';
@@ -36,7 +37,7 @@ class EmailTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          color: isUnread ? const Color(0xFFEAF2FB) : Colors.white,
+          color: isUnread ? AppColors.unreadBackground : Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +59,7 @@ class EmailTile extends StatelessWidget {
                               fontWeight: isUnread
                                   ? FontWeight.w700
                                   : FontWeight.w400,
-                              color: const Color(0xFF202124),
+                              color: AppColors.textPrimary,
                             ),
                           ),
                         ),
@@ -70,8 +71,8 @@ class EmailTile extends StatelessWidget {
                                 ? FontWeight.w600
                                 : FontWeight.w400,
                             color: isUnread
-                                ? const Color(0xFF1A73E8)
-                                : const Color(0xFF5F6368),
+                                ? AppColors.primary
+                                : AppColors.textSecondary,
                           ),
                         ),
                       ],
@@ -88,7 +89,7 @@ class EmailTile extends StatelessWidget {
                               fontWeight: isUnread
                                   ? FontWeight.w600
                                   : FontWeight.w400,
-                              color: const Color(0xFF202124),
+                              color: AppColors.textPrimary,
                             ),
                           ),
                         ),
@@ -99,8 +100,8 @@ class EmailTile extends StatelessWidget {
                             email.isStarred ? Icons.star : Icons.star_border,
                             size: 18,
                             color: email.isStarred
-                                ? const Color(0xFFF4B400)
-                                : const Color(0xFF9E9E9E),
+                                ? AppColors.star
+                                : AppColors.textHint,
                           ),
                         ),
                       ],
@@ -111,7 +112,7 @@ class EmailTile extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: const Color(0xFF5F6368),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ],

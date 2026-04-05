@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 
-class AppTheme {
-  static const Color primaryBlue = Color(0xFF1A73E8);
-  static const Color accentGreen = Color(0xFF34A853);
-  static const Color surfaceGrey = Color(0xFFF1F3F4);
-  static const Color textPrimary = Color(0xFF202124);
-  static const Color textSecondary = Color(0xFF5F6368);
 
+import '../constants/app_colors.dart';
+
+class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryBlue,
+        seedColor: AppColors.primary,
         brightness: Brightness.light,
         surface: Colors.white,
       ),
@@ -20,7 +17,7 @@ class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 1,
         backgroundColor: Colors.white,
-        foregroundColor: textPrimary,
+        foregroundColor: AppColors.textPrimary,
         surfaceTintColor: Colors.transparent,
       ),
       drawerTheme: const DrawerThemeData(
@@ -31,30 +28,31 @@ class AppTheme {
         horizontalTitleGap: 12,
       ),
       dividerTheme: const DividerThemeData(
-        color: Color(0xFFE0E0E0),
+        color: AppColors.divider,
         thickness: 0.5,
         space: 1,
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFFDADCE0)),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFFDADCE0)),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: primaryBlue, width: 2),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: primaryBlue,
+          backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           minimumSize: const Size.fromHeight(52),
           shape: RoundedRectangleBorder(
@@ -69,13 +67,14 @@ class AppTheme {
         ),
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: Color(0xFFC2E7FF),
-        foregroundColor: Color(0xFF001D35),
+        backgroundColor: AppColors.fabBackground,
+        foregroundColor: AppColors.fabForeground,
         elevation: 3,
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     );
   }
@@ -84,7 +83,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryBlue,
+        seedColor: AppColors.primary,
         brightness: Brightness.dark,
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_colors.dart';
+
 class DrawerItem extends StatelessWidget {
   final IconData icon;
   final IconData selectedIcon;
@@ -24,21 +26,21 @@ class DrawerItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       child: ListTile(
         selected: isSelected,
-        selectedTileColor: const Color(0xFFD3E3FD),
+        selectedTileColor: AppColors.drawerSelectedTile,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
         leading: Icon(
           isSelected ? selectedIcon : icon,
           color: isSelected
-              ? const Color(0xFF001D35)
-              : const Color(0xFF444746),
+              ? AppColors.drawerSelectedContent
+              : AppColors.drawerIconUnselected,
         ),
         title: Text(
           label,
           style: TextStyle(
             color: isSelected
-                ? const Color(0xFF001D35)
-                : const Color(0xFF1F1F1F),
+                ? AppColors.drawerSelectedContent
+                : AppColors.drawerTextUnselected,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
           ),
         ),
@@ -48,8 +50,8 @@ class DrawerItem extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? const Color(0xFF001D35)
-                      : const Color(0xFF1A73E8),
+                      ? AppColors.drawerSelectedContent
+                      : AppColors.primary,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(

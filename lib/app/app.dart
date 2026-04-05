@@ -9,8 +9,6 @@ import '../presentation/screens/compose/compose_screen.dart';
 import '../presentation/screens/email_detail/email_detail_screen.dart';
 import '../presentation/screens/inbox/inbox_screen.dart';
 import '../presentation/screens/login/login_screen.dart';
-import '../presentation/screens/search/search_screen.dart';
-import '../presentation/screens/settings/settings_screen.dart';
 
 final _router = GoRouter(
   initialLocation: '/login',
@@ -27,14 +25,6 @@ final _router = GoRouter(
       path: '/email/:id',
       builder: (context, state) =>
           EmailDetailScreen(emailId: state.pathParameters['id']!),
-    ),
-    GoRoute(
-      path: '/search',
-      builder: (context, state) => const SearchScreen(),
-    ),
-    GoRoute(
-      path: '/settings',
-      builder: (context, state) => const SettingsScreen(),
     ),
     GoRoute(
       path: '/compose',

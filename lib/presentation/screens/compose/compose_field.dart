@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_colors.dart';
+
 class ComposeField extends StatelessWidget {
   final String prefix;
   final Widget child;
@@ -13,18 +15,19 @@ class ComposeField extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+
           SizedBox(
             width: 60,
-            child: Text(
-              prefix,
+            child: Text(prefix,
               style: const TextStyle(
                 fontSize: 14,
-                color: Color(0xFF5F6368),
+                color: AppColors.textSecondary,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ),
-          Expanded(child: child),
+          Expanded(
+              child: child),
         ],
       ),
     );

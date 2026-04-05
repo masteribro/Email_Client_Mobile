@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../blocs/auth/auth_cubit.dart';
 import '../../blocs/auth/auth_state.dart';
 import '../../blocs/email/email_cubit.dart';
@@ -41,24 +43,14 @@ class InboxScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  IconButton(
-                    icon: const Icon(Icons.search),
-                    tooltip: 'Search',
-                    onPressed: () {
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   const SnackBar(content: Text('Search coming soon')),
-                      // );
-                      context.push('/search');
-                    },
-                  ),
                   GestureDetector(
                     onTap: () => _showAccountDialog(
-                        context, user?.name ?? 'User', user?.email ?? ''),
+                        context, user?.name ?? AppStrings.unknown, user?.email ?? ''),
                     child: Padding(
                       padding: const EdgeInsets.only(right: 12),
                       child: CircleAvatar(
                         radius: 16,
-                        backgroundColor: const Color(0xFF1A73E8),
+                        backgroundColor: AppColors.primary,
                         child: Text(
                           user != null && user.name.isNotEmpty
                               ? user.name[0].toUpperCase()
@@ -90,9 +82,9 @@ class InboxScreen extends StatelessWidget {
               floatingActionButton: FloatingActionButton.extended(
                 onPressed: () => context.push('/compose'),
                 icon: const Icon(Icons.edit_outlined),
-                label: const Text('Compose'),
-                backgroundColor: const Color(0xFFC2E7FF),
-                foregroundColor: const Color(0xFF001D35),
+                label: const Text(AppStrings.compose),
+                backgroundColor: AppColors.fabBackground,
+                foregroundColor: AppColors.fabForeground,
               ),
             );
           },
@@ -111,7 +103,7 @@ class InboxScreen extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 28,
-              backgroundColor: const Color(0xFF1A73E8),
+              backgroundColor: AppColors.primary,
               child: Text(
                 name.isNotEmpty ? name[0].toUpperCase() : 'U',
                 style: const TextStyle(
@@ -126,7 +118,7 @@ class InboxScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600, fontSize: 16)),
             Text(email,
                 style: const TextStyle(
-                    color: Color(0xFF5F6368), fontSize: 13)),
+                    color: AppColors.textSecondary, fontSize: 13)),
           ],
         ),
         actions: [
@@ -135,11 +127,11 @@ class InboxScreen extends StatelessWidget {
               Navigator.of(ctx).pop();
               context.read<AuthCubit>().logout();
             },
-            child: const Text('Sign out'),
+            child: const Text(AppStrings.signOut),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Close'),
+            child: const Text(AppStrings.close),
           ),
         ],
       ),

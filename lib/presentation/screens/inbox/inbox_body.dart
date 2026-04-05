@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/constants/app_strings.dart';
 import '../../../domain/entities/email.dart';
 import '../../blocs/email/email_cubit.dart';
 import '../../blocs/email/email_state.dart';
@@ -9,11 +10,11 @@ import '../../widgets/email_tile.dart';
 import '../../widgets/empty_state_widget.dart';
 
 String folderLabel(EmailFolder folder) => switch (folder) {
-      EmailFolder.inbox => 'Inbox',
-      EmailFolder.starred => 'Starred',
-      EmailFolder.sent => 'Sent',
-      EmailFolder.drafts => 'Drafts',
-      EmailFolder.trash => 'Trash',
+      EmailFolder.inbox => AppStrings.inbox,
+      EmailFolder.starred => AppStrings.starred,
+      EmailFolder.sent => AppStrings.sent,
+      EmailFolder.drafts => AppStrings.drafts,
+      EmailFolder.trash => AppStrings.trash,
     };
 
 IconData folderIcon(EmailFolder folder) => switch (folder) {
@@ -25,12 +26,11 @@ IconData folderIcon(EmailFolder folder) => switch (folder) {
     };
 
 String folderEmptySubtitle(EmailFolder folder) => switch (folder) {
-      EmailFolder.inbox => 'Your inbox is empty.\nNew emails will appear here.',
-      EmailFolder.starred =>
-        'Star important emails\nand they\'ll show up here.',
-      EmailFolder.sent => 'Emails you send\nwill appear here.',
-      EmailFolder.drafts => 'Unfinished emails\nwill be saved here.',
-      EmailFolder.trash => 'Deleted emails\nwill appear here.',
+      EmailFolder.inbox => AppStrings.emptyInbox,
+      EmailFolder.starred => AppStrings.emptyStarred,
+      EmailFolder.sent => AppStrings.emptySent,
+      EmailFolder.drafts => AppStrings.emptyDrafts,
+      EmailFolder.trash => AppStrings.emptyTrash,
     };
 
 class InboxBody extends StatefulWidget {
@@ -43,7 +43,6 @@ class InboxBody extends StatefulWidget {
 }
 
 class _InboxBodyState extends State<InboxBody> {
-  // TODO: if user deletes multiple emails quickly, undo only works for the last one
   String? _lastDeletedId;
   EmailFolder? _lastDeletedFolder;
 
@@ -56,10 +55,10 @@ class _InboxBodyState extends State<InboxBody> {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('Moved to Trash'),
+        content: const Text(AppStrings.movedToTrash),
         duration: const Duration(seconds: 4),
         action: SnackBarAction(
-          label: 'Undo',
+          label: AppStrings.undo,
           onPressed: () {
             if (_lastDeletedId != null && _lastDeletedFolder != null) {
               context.read<EmailCubit>().restoreFromTrash(
@@ -102,7 +101,7 @@ class _InboxBodyState extends State<InboxBody> {
               OutlinedButton.icon(
                 onPressed: () => context.read<EmailCubit>().loadEmails(),
                 icon: const Icon(Icons.refresh),
-                label: const Text('Retry'),
+                label: const Text(AppStrings.retry),
               ),
             ],
           ),
@@ -115,7 +114,7 @@ class _InboxBodyState extends State<InboxBody> {
     if (emails.isEmpty) {
       return EmptyStateWidget(
         icon: folderIcon(emailState.currentFolder),
-        title: 'No emails here',
+        title: AppStrings.noEmailsHere,
         subtitle: folderEmptySubtitle(emailState.currentFolder),
       );
     }

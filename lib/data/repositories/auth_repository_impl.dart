@@ -3,6 +3,8 @@ import '../../domain/repositories/auth_repository.dart';
 import '../datasources/mock_email_datasource.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
+
+
   @override
   Future<User> login(String email, String password) async {
     await Future.delayed(const Duration(milliseconds: 1500));
@@ -24,6 +26,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
+
     await Future.delayed(const Duration(milliseconds: 300));
   }
 }

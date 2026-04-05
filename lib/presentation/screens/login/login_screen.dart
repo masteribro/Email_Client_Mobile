@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../blocs/auth/auth_cubit.dart';
 import '../../blocs/auth/auth_state.dart';
 import 'credential_row.dart';
@@ -57,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 72,
                         height: 72,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1A73E8),
+                          color: AppColors.primary,
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: const Icon(
@@ -68,22 +70,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 32),
                       Text(
-                        'Welcome to MailBox',
+                        AppStrings.welcome,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall
                             ?.copyWith(
                               fontWeight: FontWeight.w700,
-                              color: const Color(0xFF202124),
+                              color: AppColors.textPrimary,
                             ),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Sign in to continue',
+                        AppStrings.signInToContinue,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: const Color(0xFF5F6368),
+                              color: AppColors.textSecondary,
                             ),
                       ),
                       const SizedBox(height: 40),
@@ -91,21 +93,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFFCE8E6),
+                            color: AppColors.errorBackground,
                             borderRadius: BorderRadius.circular(8),
-                            border:
-                                Border.all(color: const Color(0xFFEA4335)),
+                            border: Border.all(color: AppColors.error),
                           ),
                           child: Row(
                             children: [
                               const Icon(Icons.error_outline,
-                                  color: Color(0xFFEA4335), size: 20),
+                                  color: AppColors.error, size: 20),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
                                   errorMessage,
                                   style: const TextStyle(
-                                      color: Color(0xFFEA4335), fontSize: 14),
+                                      color: AppColors.error, fontSize: 14),
                                 ),
                               ),
                             ],
@@ -118,12 +119,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: const InputDecoration(
-                          labelText: 'Email address',
+                          labelText: AppStrings.emailAddress,
                           prefixIcon: Icon(Icons.email_outlined),
                         ),
                         validator: (v) {
-                          if (v == null || v.isEmpty) return 'Enter your email';
-                          if (!v.contains('@')) return 'Enter a valid email';
+                          if (v == null || v.isEmpty) return AppStrings.enterEmail;
+                          if (!v.contains('@')) return AppStrings.enterValidEmail;
                           return null;
                         },
                       ),
@@ -134,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         textInputAction: TextInputAction.done,
                         onFieldSubmitted: (_) => _submit(),
                         decoration: InputDecoration(
-                          labelText: 'Password',
+                          labelText: AppStrings.password,
                           prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             icon: Icon(_obscurePassword
@@ -146,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         validator: (v) {
                           if (v == null || v.isEmpty) {
-                            return 'Enter your password';
+                            return AppStrings.enterPassword;
                           }
                           return null;
                         },
@@ -163,16 +164,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: Colors.white,
                                 ),
                               )
-                            : const Text('Sign In'),
+                            : const Text(AppStrings.signIn),
                       ),
                       const SizedBox(height: 32),
                       Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF8F9FA),
+                          color: AppColors.surfaceLight,
                           borderRadius: BorderRadius.circular(8),
-                          border:
-                              Border.all(color: const Color(0xFFDADCE0)),
+                          border: Border.all(color: AppColors.border),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,26 +180,30 @@ class _LoginScreenState extends State<LoginScreen> {
                             Row(
                               children: [
                                 const Icon(Icons.info_outline,
-                                    size: 16, color: Color(0xFF5F6368)),
+                                    size: 16,
+                                    color: AppColors.textSecondary),
                                 const SizedBox(width: 6),
                                 Text(
-                                  'Demo credentials',
+                                  AppStrings.demoCredentials,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall
                                       ?.copyWith(
-                                        color: const Color(0xFF5F6368),
+                                        color: AppColors.textSecondary,
                                         fontWeight: FontWeight.w600,
                                       ),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 6),
-                            const CredentialRow(
-                                label: 'Email', value: 'ibrahim@mailbox.com'),
+
+                            const CredentialRow(label: AppStrings.emailAddress,
+                                value: 'ibrahim@mailbox.com'),
                             const SizedBox(height: 2),
+
                             const CredentialRow(
-                                label: 'Password', value: 'demo'),
+                                label: AppStrings.password,
+                                value: 'demo'),
                           ],
                         ),
                       ),

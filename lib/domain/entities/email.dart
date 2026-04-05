@@ -13,6 +13,7 @@ class Email {
   final bool isStarred;
   final EmailFolder folder;
 
+
   const Email({
     required this.id,
     required this.senderName,
