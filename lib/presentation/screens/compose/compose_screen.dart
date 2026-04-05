@@ -61,10 +61,10 @@ class _ComposeScreenState extends State<ComposeScreen> {
     final authState = context.read<AuthCubit>().state;
     final fromEmail = authState is AuthAuthenticated
         ? authState.user.email
-        : 'demo@mailbox.com';
+        : 'ibrahim@mailbox.com';
     final fromName = authState is AuthAuthenticated
         ? authState.user.name
-        : 'Demo User';
+        : 'Ibrahim Mohammed Hassan';
 
     context.read<EmailCubit>().sendEmail(
           to: to,
@@ -112,7 +112,7 @@ class _ComposeScreenState extends State<ComposeScreen> {
   Widget build(BuildContext context) {
     final fromEmail = (context.read<AuthCubit>().state is AuthAuthenticated)
         ? (context.read<AuthCubit>().state as AuthAuthenticated).user.email
-        : 'demo@mailbox.com';
+        : 'ibrahim@mailbox.com';
 
     return BlocConsumer<EmailCubit, EmailState>(
       listenWhen: (prev, curr) =>

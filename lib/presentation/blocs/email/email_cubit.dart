@@ -55,6 +55,9 @@ class EmailCubit extends Cubit<EmailState> {
   Future<void> moveToTrash(String id) =>
       _update(id, (e) => e.copyWith(folder: EmailFolder.trash, isRead: true));
 
+  Future<void> restoreFromTrash(String id, EmailFolder originalFolder) =>
+      _update(id, (e) => e.copyWith(folder: originalFolder));
+
   Future<void> sendEmail({
     required String to,
     required String subject,

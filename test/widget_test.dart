@@ -1,30 +1,24 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:email_client_mobile/main.dart';
+import 'package:email_client_mobile/app/app.dart';
+import 'package:email_client_mobile/data/repositories/auth_repository_impl.dart';
+import 'package:email_client_mobile/data/repositories/email_repository_impl.dart';
+import 'package:email_client_mobile/presentation/blocs/auth/auth_cubit.dart';
+import 'package:email_client_mobile/presentation/blocs/email/email_cubit.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('App renders login screen on cold start', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => AuthCubit(AuthRepositoryImpl())),
+          BlocProvider(create: (_) => EmailCubit(EmailRepositoryImpl())),
+        ],
+        child: const EmailClientApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Sign In'), findsOneWidget);
   });
 }

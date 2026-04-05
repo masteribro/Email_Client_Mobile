@@ -33,13 +33,52 @@ String folderEmptySubtitle(EmailFolder folder) => switch (folder) {
       EmailFolder.trash => 'Deleted emails\nwill appear here.',
     };
 
-class InboxBody extends StatelessWidget {
+class InboxBody extends StatefulWidget {
   final EmailState emailState;
 
   const InboxBody({super.key, required this.emailState});
 
   @override
+  State<InboxBody> createState() => _InboxBodyState();
+}
+
+class _InboxBodyState extends State<InboxBody> {
+  // TODO: if user deletes multiple emails quickly, undo only works for the last one
+  String? _lastDeletedId;
+  EmailFolder? _lastDeletedFolder;
+
+  void _handleDelete(BuildContext context, Email email) {
+    _lastDeletedId = email.id;
+    _lastDeletedFolder = email.folder;
+
+    context.read<EmailCubit>().moveToTrash(email.id);
+
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Moved to Trash'),
+        duration: const Duration(seconds: 4),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            if (_lastDeletedId != null && _lastDeletedFolder != null) {
+              context.read<EmailCubit>().restoreFromTrash(
+                    _lastDeletedId!,
+                    _lastDeletedFolder!,
+                  );
+              _lastDeletedId = null;
+              _lastDeletedFolder = null;
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final emailState = widget.emailState;
+
     if (emailState is EmailInitial ||
         (emailState is EmailLoading && emailState.allEmails.isEmpty)) {
       return const Center(child: CircularProgressIndicator());
@@ -94,7 +133,7 @@ class InboxBody extends StatelessWidget {
             onTap: () => context.push('/email/${email.id}'),
             onStarToggle: () =>
                 context.read<EmailCubit>().toggleStar(email.id),
-            onDelete: () => context.read<EmailCubit>().moveToTrash(email.id),
+            onDelete: () => _handleDelete(context, email),
           );
         },
       ),
