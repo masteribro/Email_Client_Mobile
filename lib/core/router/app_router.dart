@@ -4,6 +4,8 @@ import '../../presentation/screens/compose/compose_screen.dart';
 import '../../presentation/screens/email_detail/email_detail_screen.dart';
 import '../../presentation/screens/inbox/inbox_screen.dart';
 import '../../presentation/screens/login/login_screen.dart';
+import '../../presentation/screens/search/search_screen.dart';
+import '../../presentation/screens/settings/settings_screen.dart';
 
 class AppRouter {
   static final router = GoRouter(
@@ -32,6 +34,14 @@ class AppRouter {
             replySubject: extra?['replySubject'],
           );
         },
+      ),
+      GoRoute(
+        path: '/search',
+        builder: (context, state) => const SearchScreen(),
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => const SettingsScreen(),
       ),
     ],
   );

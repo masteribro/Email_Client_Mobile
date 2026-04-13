@@ -52,9 +52,9 @@ class AppStrings {
   static const String messageSent = 'Message sent';
   static const String attachFile = 'Attach file';
   static const String insertLink = 'Insert link';
-  static const String attachmentsNotSupported =
-      'Attachments not supported in demo';
-  static const String linksNotSupported = 'Links not supported in demo';
+  static const String insert = 'Insert';
+  static const String urlLabel = 'URL';
+  static const String displayTextLabel = 'Display text (optional)';
   static const String invalidRecipient =
       'Please enter a valid recipient email';
   static const String sendFailed =
@@ -66,6 +66,22 @@ class AppStrings {
   static const String markAsUnread = 'Mark as unread';
   static const String markAsRead = 'Mark as read';
   static const String moveToTrash = 'Move to trash';
+
+  static const String settings = 'Settings';
+  static const String searchInMail = 'Search in mail';
+  static const String notifications = 'Email notifications';
+  static const String notificationsSubtitle = 'Get notified about new emails';
+  static const String autoMarkRead = 'Auto-mark as read';
+  static const String autoMarkReadSubtitle = 'Mark emails as read when opened';
+  static const String about = 'About';
+  static const String version = 'Version';
+  static const String manageAccount = 'Manage your account';
+  static const String addAccount = 'Add another account';
+  static const String signOutAll = 'Sign out of all accounts';
+  static const String account = 'Account';
+  static const String general = 'General';
+  static const String noSearchResults = 'No results found';
+  static const String searchHint = 'Search emails...';
 
   static String replySubject(String s) => 'Re: $s';
   static String forwardSubject(String s) => 'Fwd: $s';

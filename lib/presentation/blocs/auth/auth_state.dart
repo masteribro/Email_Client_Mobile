@@ -22,11 +22,12 @@ final class AuthLoading extends AuthState {
 
 final class AuthAuthenticated extends AuthState {
   final User user;
+  final List<User> savedAccounts;
 
-  const AuthAuthenticated(this.user);
+  const AuthAuthenticated(this.user, {this.savedAccounts = const []});
 
   @override
-  List<Object?> get props => [user.id];
+  List<Object?> get props => [user.id, savedAccounts];
 }
 
 final class AuthUnauthenticated extends AuthState {

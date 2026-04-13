@@ -9,6 +9,7 @@ class InboxDrawer extends StatelessWidget {
   final int unreadCount;
   final ValueChanged<EmailFolder> onFolderSelected;
   final VoidCallback onSignOut;
+  final VoidCallback onSettings;
 
   const InboxDrawer({
     super.key,
@@ -16,6 +17,7 @@ class InboxDrawer extends StatelessWidget {
     required this.unreadCount,
     required this.onFolderSelected,
     required this.onSignOut,
+    required this.onSettings,
   });
 
   @override
@@ -93,6 +95,13 @@ class InboxDrawer extends StatelessWidget {
                     onTap: () => onFolderSelected(EmailFolder.trash),
                   ),
                   const Divider(),
+                  DrawerItem(
+                    icon: Icons.settings_outlined,
+                    selectedIcon: Icons.settings,
+                    label: AppStrings.settings,
+                    isSelected: false,
+                    onTap: onSettings,
+                  ),
                   ListTile(
                     leading: const Icon(Icons.logout,
                         color: AppColors.textSecondary),
